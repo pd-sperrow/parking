@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->double('price');
 
-            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->timestamps();

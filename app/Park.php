@@ -25,4 +25,13 @@ class Park extends Model
     {
         return $this->belongsTo('App\Slot', 'slot_id', 'id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function($model)
+        {
+            $model->recived_by = auth()->id();
+        });
+    }
 }

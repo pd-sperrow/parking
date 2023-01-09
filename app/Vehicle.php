@@ -15,4 +15,13 @@ class Vehicle extends Model
     {
         return $this->belongsTo('App\Category', 'category_id', 'id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function($model)
+        {
+            $model->created_by = auth()->id();
+        });
+    }
 }

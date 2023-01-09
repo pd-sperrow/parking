@@ -16,7 +16,7 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
 
             $table->string('name');
@@ -25,7 +25,7 @@ class CreateVehiclesTable extends Migration
             $table->string('reg_no')->unique();
             $table->tinyInteger('status')->default(0);
 
-            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->timestamps();

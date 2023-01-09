@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -15,35 +16,28 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return view('admins.index', ['users' => User::get()]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('admins.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        User::create([
+            "name"=>$request->name,
+            "email"=>$request->email,
+            "password"=>bcrypt($request->password),
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'User Created Successfully!!');
     }
 
     /**
@@ -54,7 +48,8 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admins.show');
+
     }
 
     /**
@@ -65,7 +60,8 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admins.edit');
+
     }
 
     /**
@@ -86,8 +82,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User Deleted Successfully!!');
     }
 }

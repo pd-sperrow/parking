@@ -5,17 +5,8 @@ namespace App\Http\Controllers;
 use App\Vehicle;
 use Illuminate\Http\Request;
 
-class VehicleController extends Controller
+class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +14,18 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        return view('vehicles.index',
-       ['vehicles' =>
-       Vehicle::with(['customer:id,name', 'user:id,name', 'category:id,name'])->get()]);
+        $vehicles  = new Vehicle();
+
+        $duration = [];
+        foreach ($vehicles->get() as $key => $vehicle) {
+        $duration[] =  $vehicle->duration * $vehicle->packing_charge;
+        }
+
+        $total_amount = array_sum($duration);
+        $total_vehicles = $vehicles->count();
+        $total_vehicle_in = Vehicle::where('status', 0)->orWhere('status', 1)->whereDate('created_at', now()->format('Y-m-d'))->count();
+        $total_vehicle_out = Vehicle::where('status', 1)->whereDate('created_at', now()->format('Y-m-d'))->count();
+        return view('dashboard.index', ['vehicles' => $vehicles->get()] ,compact('total_amount', 'total_vehicle_in', 'total_vehicle_out','total_vehicles'));
     }
 
     /**

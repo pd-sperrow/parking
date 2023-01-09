@@ -10,4 +10,13 @@ class Slot extends Model
     {
         return $this->belongsTo('App\User', 'created_by', 'id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function($model)
+        {
+            $model->created_by = auth()->id();
+        });
+    }
 }

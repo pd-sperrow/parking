@@ -156,10 +156,9 @@
 
       <footer class="footer">
         <div class="w-100 clearfix">
-          <span class="text-sm-left d-md-inline-block text-center">Copyright © {{ date('Y') }} {{ config('app.name') }} All Rights Reserved.</span>
-          <span class="float-sm-right mt-sm-0 float-none mt-1 text-center">Made with <i class="fa fa-heart text-danger"></i> for <a href="https://tiu.edu.iq/" class="text-dark"
-              target="_blank">IT Department IT-
-              326 Web Programming</a></span>
+          <span class="text-sm-left d-md-inline-block text-center">Copyright © {{ date('Y') }} {{ config('app.name', 'SUST') }} All Rights Reserved.</span>
+          <span class="float-sm-right mt-sm-0 float-none mt-1 text-center">Developed by <a href="#" class="text-dark"
+              target="_blank">Zakir Hossain</a></span>
         </div>
       </footer>
 
@@ -169,7 +168,7 @@
 
 
 
-  <div class="modal fade apps-modal" id="appsModal" tabindex="-1" role="dialog" aria-labelledby="appsModalLabel" aria-hidden="true" data-backdrop="false">
+  {{-- <div class="modal fade apps-modal" id="appsModal" tabindex="-1" role="dialog" aria-labelledby="appsModalLabel" aria-hidden="true" data-backdrop="false">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ik ik-x-circle"></i></button>
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -253,7 +252,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
