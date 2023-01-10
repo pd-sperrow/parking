@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slot extends Model
 {
+    protected $fillable = ['name', 'capacity', 'created_by'];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'created_by', 'id');

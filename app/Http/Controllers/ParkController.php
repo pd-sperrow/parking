@@ -22,7 +22,17 @@ class ParkController extends Controller
      */
     public function index()
     {
-        //
+        return view('parks.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function history(Request $request)
+    {
+        return view('parks.history');
     }
 
     /**
@@ -32,7 +42,7 @@ class ParkController extends Controller
      */
     public function create()
     {
-        //
+        return view('parks.create');
     }
 
     /**

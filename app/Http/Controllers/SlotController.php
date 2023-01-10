@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSlotRequest;
+use App\Slot;
 use Illuminate\Http\Request;
 
 class SlotController extends Controller
@@ -15,79 +17,39 @@ class SlotController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function index()
     {
-        //
+        return view('slots.index', ['slots' => Slot::with('user:id,name')->get(['id as slot_id', 'name', 'capacity', 'created_at', 'created_by'])]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('slots.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreSlotRequest $request)
+    {
+        Slot::updateOrCreate(['id' => $request->slot_id], $request->except('slot_id'));
+
+        return redirect()->route('slots.index')->with('success', 'slot Created Successfully!!');
+    }
+
+    public function show(Slot $slot)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(Slot $slot)
     {
-        //
+        return view('slots.create', compact('slot'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Slot $slot)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $slot->delete();
+        return redirect()->route('slots.index')->with('success', 'Slot Deleted Successfully!!');
     }
 }

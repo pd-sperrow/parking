@@ -33,4 +33,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('slots', SlotController::class);
 
     Route::resource('parks', ParkController::class);
+    Route::get('parks/history', 'ParkController@history')->name('parks.history');
 });

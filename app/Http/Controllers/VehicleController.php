@@ -25,7 +25,7 @@ class VehicleController extends Controller
     {
         return view('vehicles.index',
        ['vehicles' =>
-       Vehicle::with(['customer:id,name', 'user:id,name', 'category:id,name'])->get()]);
+       Vehicle::with(['user:id,name', 'category:id,name'])->get()]);
     }
 
     /**

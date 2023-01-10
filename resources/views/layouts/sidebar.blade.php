@@ -30,17 +30,26 @@
                 </div>
 
                 <div class="nav-lavel">Parking Section</div>
-                <div class="nav-item {{ request()->routeIs('parks.index') ? 'active' : '' }}">
-                    <a href="{{ route('parks.index') }}"><i class="ik ik-inbox"></i><span>New Parking</span></a>
+                <div class="nav-item {{ request()->routeIs('parks.create') ? 'active' : '' }}">
+                    <a href="{{ route('parks.create') }}"><i class="ik ik-inbox"></i><span>New Parking</span></a>
                 </div>
                 <div class="nav-item {{ request()->routeIs('parks.index') ? 'active' : '' }}">
                     <a href="{{ route('parks.index') }}"><i class="ik ik-gitlab"></i><span>Currently Parked</span></a>
                 </div>
-                <div class="nav-item {{ request()->routeIs('parks.index') ? 'active' : '' }}">
-                    <a href="{{ route('parks.index') }}"><i class="ik ik-edit"></i><span>Parking History</span></a>
+                <div class="nav-item {{ request()->routeIs('parks.history') ? 'active' : '' }}">
+                    <a href="{{ route('parks.history') }}"><i class="ik ik-edit"></i><span>Parking History</span></a>
                 </div>
 
                 <div class="nav-lavel">Settings</div>
+
+                <div class="nav-item has-sub {{ request()->routeIs('slots*')  ? 'open' : ''}}">
+                    <a href="#"><i class="ik ik-box"></i><span>Slots</span></a>
+                    <div class="submenu-content">
+                        <a href="{{ route('slots.create') }}" class="menu-item  {{ request()->routeIs('slots.create') ? 'active' : '' }}">Create</a>
+                        <a href="{{ route('slots.index') }}" class="menu-item  {{ request()->routeIs('slots.index') ? 'active' : '' }}">List</a>
+                    </div>
+                </div>
+
                 <div class="nav-item has-sub {{ request()->routeIs('users*')  ? 'open' : ''}}">
                     <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Manage Admins </span> </a>
                     <div class="submenu-content">
