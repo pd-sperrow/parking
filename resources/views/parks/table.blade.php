@@ -1,34 +1,34 @@
 <table id="data_table" class="table">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>Parking Number</th>
             <th>Reg #</th>
             <th>Vehicle Name</th>
             <th>Parking Area</th>
-            <th>Parking Number</th>
-            <th>Created At</th>
-            <th>Created By</th>
-            <th class="nosort">Operation</th>
+            <th>Recieved By</th>
+            <th>Parking Time</th>
+            <th>Charge</th>
+            <th class="nosort">Action</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($parks as $key => $vehicleIn)
+        @foreach ($parks as $key => $park)
         <tr>
-            <td>{{ $key+1 }}</td>
-            <td>{{ $vehicleIn->vehicle->registration_number }}</td>
-            <td>{{ $vehicleIn->vehicle->name }}</td>
-            <td>{{ $vehicleIn->parking_area }}</td>
-            <td>{{ $vehicleIn->parking_number }}</td>
-            <td>{{ $vehicleIn->created_at->format('Y/m/d H:i A') }}</td>
-            <td>{{ $vehicleIn->user->name }}</td>
+            <td>{{ $park->id }}</td>
+            <td>{{ $park->vehicle->reg_no }}</td>
+            <td>{{ $park->vehicle->name }}</td>
+            <td>{{ $park->slot->name }}</td>
+            <td>{{ $park->reciever->name }}</td>
+            <td>{{ $park->parking_time }}</td>
+            <td>৳ {{ $park->charge }}</td>
             <td>
                 <div class="table-actions d-flex">
-                    <a href="{{ route('parks.edit', $vehicleIn->id) }}"><i class="ik ik-edit-2"></i></a>
+                    <a href="{{ route('parks.edit', $park->id) }}"><i class="ik ik-edit-2"></i></a>
                     <a href="#" onclick=" confirm('Are you sure you want to delete this?');
                     document.getElementById('delete-data').submit();"><i class="ik ik-trash-2"></i></a>
 
-                     <form id="delete-data" action="{{ route('parks.destroy', $vehicleIn->id) }}" method="POST" class="d-none">
+                     <form id="delete-data" action="{{ route('parks.destroy', $park->id) }}" method="POST" class="d-none">
                         @method('Delete')
                         @csrf
                     </form>

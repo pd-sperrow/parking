@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header"><h3>New Out Vehicle</h3></div>
+            <div class="card-header"><h3>New Parking</h3></div>
             <div class="card-body">
               @include('parks.fields')
             </div>

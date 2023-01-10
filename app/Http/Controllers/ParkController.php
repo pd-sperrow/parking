@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Park;
+use App\Slot;
+use App\Vehicle;
 use Illuminate\Http\Request;
 
 class ParkController extends Controller
@@ -22,7 +26,8 @@ class ParkController extends Controller
      */
     public function index()
     {
-        return view('parks.index');
+       $parks = Park::with(['vehicle.category', 'slot', 'reciever', 'leaved'])->where('status', 'in_parking')->get();
+        return view('parks.index', compact(['parks']));
     }
 
     /**
@@ -32,6 +37,7 @@ class ParkController extends Controller
      */
     public function history(Request $request)
     {
+        dd($request);
         return view('parks.history');
     }
 
@@ -42,7 +48,12 @@ class ParkController extends Controller
      */
     public function create()
     {
-        return view('parks.create');
+        $slots = Slot::all();
+        $categories = Category::all();
+        return view('parks.create', compact([
+            'slots',
+            'categories'
+        ]));
     }
 
     /**
@@ -53,7 +64,44 @@ class ParkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!Vehicle::where('reg_no', $request->reg_no)->first()) {
+            $request->validate([
+                'reg_no' => 'required|string|max:191|unique:vehicles',
+            ]);
+        }
+        $request->validate([
+            'category_id' => 'required|integer|exists:categories,id',
+            'slot_id' => 'required|integer|exists:categories,id',
+            'name' => 'required|string|max:191',
+
+            'customer_name' => 'required|string|max:191',
+            'customer_phone' => 'nullable|string|max:191',
+        ]);
+
+        $vehicle = Vehicle::updateOrCreate(['id' => $request->vehicle_id], [
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'reg_no' => $request->reg_no,
+        ]);
+
+        $category = Category::findOrFail($request->category_id);
+
+        $park = Park::updateOrCreate(['id' => $request->park_id], [
+            'vehicle_id' => $vehicle->id,
+            'slot_id' => $request->slot_id,
+            'customer_name' => $request->customer_name,
+            'parking_time' => now(),
+            'charge' => $category->price,
+        ]);
+
+        $park->customer_phone = $request->customer_phone;
+        if($request->has('leave_time')) {
+            $park->leave_time = now();
+            $park->leaved_by = auth()->user()->id;
+        }
+        $park->save();
+
+        return redirect()->route('parks.show', [$park->id])->with('success', 'Parked Successfully!!');
     }
 
     /**
@@ -62,9 +110,10 @@ class ParkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Park $park)
     {
-        //
+        $park->load(['vehicle.category', 'slot', 'reciever', 'leaved']);
+        return view('parks.show', compact('park'));
     }
 
     /**
@@ -73,9 +122,12 @@ class ParkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Park $park)
     {
-        //
+        $slots = Slot::all();
+        $categories = Category::all();
+        $park->load(['vehicle.category', 'slot', 'reciever', 'leaved']);
+        return view('parks.edit', compact(['park', 'slots', 'categories']));
     }
 
     /**

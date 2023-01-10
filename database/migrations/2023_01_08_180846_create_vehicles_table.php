@@ -20,10 +20,8 @@ class CreateVehiclesTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
 
             $table->string('name');
-            $table->string('customer_name');
-            $table->string('customer_phone')->nullable();
             $table->string('reg_no')->unique();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
 
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');

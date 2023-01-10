@@ -1,39 +1,62 @@
 <form action="{{ route('parks.store') }}" class="forms-sample" method="POST">
     @csrf
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group">
-                <label for="exampleInputName1">Select Vehicle</label>
-                <select name="vehicle_id" class="form-control">
+                <label>Select Category</label>
+                <select name="category_id" class="form-control">
                     <option value="">Select</option>
-                    @foreach ($vehicles as $vehicle)
-                        <option value="{{ $vehicle->id }}" @if (isset($parks))
-                            {{ $parks->vehicle_id == $vehicle->id ? 'selected' : '' }}
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @if (isset($park))
+                            {{ $park->vehicle->category_id == $category->id ? 'selected' : '' }}
                     @endif>
-                    {{ $vehicle->name .' - '. $vehicle->registration_number }}</option>
+                    {{ $category->name }}</option>
                     @endforeach
                 </select>
-                @if (isset($parks))
-                    <input type="hidden" name="parks_id" value="{{ $parks->id }}">
+                @if (isset($park))
+                    <input type="hidden" name="park_id" value="{{ $park->id }}">
+                    <input type="hidden" name="vehicle_id" value="{{ $park->vehicle->id }}">
                 @endif
             </div>
         </div>
-        <div class="col-md-4">
-            <label for="exampleInputName1">Select Parking Area</label>
-            <select name="parking_area" class="form-control">
-                @foreach (getParkingareas() as $parking_area)
-                    <option value="{{ $parking_area }}" @if (isset($parks))
-                        {{ $parks->parking_area == $parking_area ? 'selected' : '' }}
+        <div class="col-md-6">
+            <label>Select Parking Area</label>
+            <select name="slot_id" class="form-control">
+                <option value="">Select</option>
+                @foreach ($slots as $slot)
+                    <option value="{{ $slot->id }}" @if (isset($park))
+                        {{ $park->slot_id == $slot->id ? 'selected' : '' }}
                 @endif>
-                {{ $parking_area }}</option>
+                {{ $slot->name }}</option>
                 @endforeach
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group">
-                <label for="exampleInputEmail3">Parking Number</label>
-                <input type="text" name="parking_number" value="{{ isset($parks) ? $parks->parking_number : '' }}"
-                    class="form-control" id="exampleInputEmail3" placeholder="Parking Number">
+                <label for="">Vehicle Name</label>
+                <input type="text" name="name" value="{{ isset($park) ? $park->vehicle->name : '' }}"
+                    class="form-control" id="" placeholder="Vehicle Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Vehicle Reg. No:</label>
+                <input type="text" name="reg_no" value="{{ isset($park) ? $park->vehicle->reg_no : '' }}"
+                    class="form-control" id="" placeholder="Registration Number">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Customer Name:</label>
+                <input type="text" name="customer_name" value="{{ isset($park) ? $park->customer_name : '' }}"
+                    class="form-control" id="" placeholder="Customer Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Customer Phone:</label>
+                <input type="text" name="customer_phone" value="{{ isset($park) ? $park->customer_phone : '' }}"
+                    class="form-control" id="" placeholder="Customer Phone">
             </div>
         </div>
     </div>

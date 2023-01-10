@@ -84,7 +84,7 @@
     <div class="card">
 
         <div class="card-body">
-            @include('vehicles.table')
+            {{-- @include('vehicles.table') --}}
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">{{ $vehicle->name }} - {{ $vehicle->plat_number }} Details</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">{{ $vehicle->name }} - {{ $vehicle->reg_no }} Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -14,10 +14,10 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                        <li class="list-group-item">Duration</li>
+                        <li class="list-group-item">Charge</li>
                     </div>
                     <div class="col-md-8">
-                        <li class="list-group-item text-right"><strong>{{ $vehicle->duration }} Houres</strong></li>
+                        <li class="list-group-item text-right"><strong>{{ $vehicle->category->price }}</strong></li>
                         </div>
                     </div>
                     <div class="row">

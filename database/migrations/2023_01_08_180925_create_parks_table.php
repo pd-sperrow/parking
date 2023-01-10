@@ -22,8 +22,11 @@ class CreateParksTable extends Migration
             $table->unsignedBigInteger('slot_id');
             $table->foreign('slot_id')->references('id')->on('slots');
 
+            $table->string('customer_name');
+            $table->string('customer_phone')->nullable();
+
             $table->timestamp('parking_time');
-            $table->timestamp('leave_time');
+            $table->timestamp('leave_time')->nullable();
             $table->string('status')->default('in_parking'); //['in_parking', 'leaved']
             $table->double('charge');
 

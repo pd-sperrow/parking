@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Park extends Model
 {
+    protected $fillable = ['vehicle_id', 'slot_id', 'customer_name', 'parking_time', 'charge', 'recived_by'];
     public function reciever()
     {
         return $this->belongsTo('App\User', 'recived_by', 'id');
