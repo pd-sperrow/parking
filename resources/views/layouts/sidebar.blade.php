@@ -36,8 +36,8 @@
                 <div class="nav-item {{ request()->routeIs('parks.index') ? 'active' : '' }}">
                     <a href="{{ route('parks.index') }}"><i class="ik ik-gitlab"></i><span>Currently Parked</span></a>
                 </div>
-                <div class="nav-item {{ request()->routeIs('parks.history') ? 'active' : '' }}">
-                    <a href="{{ route('parks.history') }}"><i class="ik ik-edit"></i><span>Parking History</span></a>
+                <div class="nav-item {{ request()->routeIs('reports.index') ? 'active' : '' }}">
+                    <a href="{{ route('reports.index') }}"><i class="ik ik-edit"></i><span>Parking History</span></a>
                 </div>
 
                 <div class="nav-lavel">Settings</div>

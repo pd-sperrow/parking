@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Park;
 use App\Vehicle;
 use Illuminate\Http\Request;
 
@@ -14,18 +15,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $vehicles  = new Vehicle();
+        $total_amount = Park::whereDate('created_at', now()->format('Y-m-d'))->sum('charge');
+        $total_vehicles = Vehicle::count();
 
-        $duration = [];
-        foreach ($vehicles->get() as $key => $vehicle) {
-        $duration[] =  $vehicle->duration * $vehicle->packing_charge;
-        }
-
-        $total_amount = array_sum($duration);
-        $total_vehicles = $vehicles->count();
-        $total_vehicle_in = Vehicle::where('status', 0)->orWhere('status', 1)->whereDate('created_at', now()->format('Y-m-d'))->count();
-        $total_vehicle_out = Vehicle::where('status', 1)->whereDate('created_at', now()->format('Y-m-d'))->count();
-        return view('dashboard.index', ['vehicles' => $vehicles->get()] ,compact('total_amount', 'total_vehicle_in', 'total_vehicle_out','total_vehicles'));
+        $currently_parked = Park::where('status', 'in_parking')->count();
+        $today_parked = Park::whereDate('created_at', now()->format('Y-m-d'))->count();
+        $parks = Park::with(['vehicle.category', 'slot', 'reciever', 'leaved'])->where('status', 'in_parking')->get();
+        return view('dashboard.index', compact('total_amount', 'currently_parked', 'today_parked', 'total_vehicles', 'parks'));
     }
 
     /**

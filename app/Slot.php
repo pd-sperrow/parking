@@ -13,6 +13,11 @@ class Slot extends Model
         return $this->belongsTo('App\User', 'created_by', 'id');
     }
 
+    public function parks ()
+    {
+        return $this->hasMany('App\Park', 'slot_id', 'id');
+    }
+
     protected static function boot()
     {
         parent::boot();

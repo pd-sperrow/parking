@@ -28,10 +28,13 @@
                 <div class="col-md-6 mb-1 text-right"><h6>{{ $park->slot->name }}</h6></div>
 
                 <div class="col-md-6"><h6>Parked Time</h6></div>
-                <div class="col-md-6 mb-1 text-right"><h6>{{ $park->parking_time }}</h6></div>
+                @php
+                    $date = new DateTime($park->parking_time);
+                @endphp
+                <div class="col-md-6 mb-1 text-right"><h6>{{ $date->format('d M Y h:i A') }}</h6></div>
 
                 <div class="col-md-6"><h6>Charge</h6></div>
-                <div class="col-md-6 text-right"><h6>৳ {{ $park->charge }}</h6></div>
+                <div class="col-md-6 text-right"><h6>৳ {{ $park->charge }}(Paid)</h6></div>
 
                 <div class="col-md-12"><hr></div>
                 <div class="col-md-6"><h6>Recieved By</h6></div>
@@ -39,7 +42,10 @@
                 <div class="col-md-6"><h6>Leaved By</h6></div>
                 <div class="col-md-6 text-right"><h6>{{ optional($park->leaved)->name ?? 'Currently Parked' }}</h6></div>
                 <div class="col-md-6"><h6>Leaved Time</h6></div>
-                <div class="col-md-6 text-right"><h6>{{ $park->leave_time ?? 'Currently Parked' }}</h6></div>
+                @php
+                    $ldate = new DateTime($park->leave_time);
+                @endphp
+                <div class="col-md-6 text-right"><h6>{{ ($park->leave_time) ? $ldate->format('d M Y h:i A') : 'Currently Parked' }}</h6></div>
               </div>
             </div>
             <div class="card-footer">

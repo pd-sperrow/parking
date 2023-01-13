@@ -27,7 +27,15 @@
                     <option value="{{ $slot->id }}" @if (isset($park))
                         {{ $park->slot_id == $slot->id ? 'selected' : '' }}
                 @endif>
-                {{ $slot->name }}</option>
+                @php
+                    $capacity = $slot->capacity - $slot->parks->count();
+                    if ($capacity > 0) {
+                        $text = ', Available slots - ' . $capacity;
+                    } else {
+                        $text = ', No available slots';
+                    }
+                @endphp
+                {{ $slot->name . $text }}</option>
                 @endforeach
             </select>
         </div>
@@ -59,6 +67,19 @@
                     class="form-control" id="" placeholder="Customer Phone">
             </div>
         </div>
+        @if(isset($park) && $park->status == 'in_parking')
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mark as leave</label>
+                    <select name="leaved" class="form-control">
+                        <option value="">Select</option>
+                        <option value="leaved" @if (isset($park))
+                            {{ $park->status == 'leaved' ? 'selected' : '' }} @endif>
+                            Leave</option>
+                    </select>
+                </div>
+            </div>
+        @endif
     </div>
 
     <button type="submit" class="btn btn-primary mr-2">Submit</button>
