@@ -86,7 +86,6 @@ class ParkController extends Controller
             'vehicle_id' => $vehicle->id,
             'slot_id' => $request->slot_id,
             'customer_name' => $request->customer_name,
-            'parking_time' => now(),
             'charge' => $category->price,
         ]);
 

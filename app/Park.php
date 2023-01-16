@@ -33,6 +33,7 @@ class Park extends Model
         static::creating(function($model)
         {
             $model->recived_by = auth()->id();
+            $model->parking_time = now();
         });
     }
 }

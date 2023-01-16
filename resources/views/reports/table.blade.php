@@ -3,7 +3,6 @@
         <tr>
             <th>Parking Number</th>
             <th>Reg #</th>
-            <th>Vehicle Name</th>
             <th>Parking Area</th>
             <th>Recieved By</th>
             <th>Parking Time</th>
@@ -18,7 +17,6 @@
         <tr>
             <td>{{ $park->id }}</td>
             <td>{{ $park->vehicle->reg_no }}</td>
-            <td>{{ $park->vehicle->name }}</td>
             <td>{{ $park->slot->name }}</td>
             <td>{{ $park->reciever->name }}</td>
             <td>{{ $park->parking_time }}</td>
