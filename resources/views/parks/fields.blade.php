@@ -24,17 +24,17 @@
             <select name="slot_id" class="form-control">
                 <option value="">Select</option>
                 @foreach ($slots as $slot)
+                    @php
+                        $capacity = $slot->capacity - $slot->parks->count();
+                        if ($capacity > 0) {
+                            $text = ', Available slots - ' . $capacity;
+                        } else {
+                            $text = ', No available slots';
+                        }
+                    @endphp
                     <option value="{{ $slot->id }}" @if (isset($park))
                         {{ $park->slot_id == $slot->id ? 'selected' : '' }}
-                @endif>
-                @php
-                    $capacity = $slot->capacity - $slot->parks->count();
-                    if ($capacity > 0) {
-                        $text = ', Available slots - ' . $capacity;
-                    } else {
-                        $text = ', No available slots';
-                    }
-                @endphp
+                @endif @if(!isset($park) && $capacity <= 0) disabled @endif>
                 {{ $slot->name . $text }}</option>
                 @endforeach
             </select>
